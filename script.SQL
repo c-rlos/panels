@@ -83,7 +83,7 @@ Call AddFieldToTable("usuario", "aPaterno", adVarWChar, 50, 0, "", "TRUE", "", "
 Call AddFieldToTable("usuario", "aMAterno", adVarWChar, 50, 0, "", "TRUE", "", "", "", "", "")
 Call AddFieldToTable("usuario", "telefonoMovil", adVarWChar, 50, 0, "", "TRUE", "", "", "", "", "")
 Call AddFieldToTable("usuario", "telefonoFijo", adVarWChar, 50, 0, "", "TRUE", "", "", "", "", "")
-Call AddFieldToTable("usuario", "direccion", adVarWChar, 500, 0, "", "TRUE", "", "", "", "", "")
+Call AddFieldToTable("usuario", "direccion", adVarWChar, 255, 0, "", "TRUE", "", "", "", "", "")
 Call AddFieldToTable("usuario", "fechaIngreso", adDate, 0, 0, "", "TRUE", "", "", "", "", "")
 Call AddFieldToTable("usuario", "idEstatus", adSmallInt, 0, 0, "", "FALSE", "", "", "", "", "")
 
