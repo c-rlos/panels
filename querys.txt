@@ -1,0 +1,45 @@
+-- Actualiza estatus (en espera)
+SELECT idUsuario, nombre, numeroInvitados, usuarioRepitiendo
+FROM(
+    SELECT 
+        u.idUsuario, u.nombre, 
+        (SELECT COUNT(*) FROM usuario WHERE idAnfitrion = u.idUsuario) As numeroInvitados,
+        (SELECT COUNT(*) FROM panel_participacion WHERE estatusParticipacion = 6 AND idUsuario = u.idUsuario) As usuarioRepitiendo 
+    FROM usuario u
+)AS d1
+WHERE numeroInvitados < 2 AND usuarioRepitiendo = 0
+
+
+
+-- Actualiza estatus (en mas de 1 tablero)
+SELECT 
+    idUsuario, COUNT(*) AS total
+FROM(
+    SELECT idNivel, idUsuario, COUNT(*) AS total
+    FROM panel_participacion 
+    GROUP BY idNivel, idUsuario
+)AS d1
+GROUP BY idUsuario
+HAVING COUNT(*) > 1
+
+
+-- Actualiza estatus (activo)
+SELECT 
+    idUsuario, nombre, idEstatus, numeroInvitados
+FROM(
+    SELECT 
+        u.idUsuario, u.nombre, idEstatus,
+        (SELECT COUNT(*) FROM usuario WHERE idAnfitrion = u.idUsuario) As numeroInvitados
+    FROM usuario u
+)AS d1
+WHERE numeroInvitados >= 2 AND idEstatus = 3 
+
+
+--- proceso finaliza tablero
+UPDATE panel_participacion
+SET idColor = 6,
+    fechaFin = Date(),
+    noPosicion = -1,
+    estatusParticipacion = 6
+WHERE idUsuario = 1 AND idNivel = 1
+
